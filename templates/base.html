@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}BankGuard AI{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            🛡️ BANKGUARD <span>AI</span>
+            <small>FRAUD DETECTION SYSTEM</small>
+        </div>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <a href="/" class="nav-link active">▦ Dashboard</a>
+        <a href="/#analysis" class="nav-link">⌕ Transaction Analysis</a>
+        <a href="/#about" class="nav-link">ⓘ About Project</a>
+
+    </aside>
+
+    <main class="main-content">
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="footer">
+            BankGuard AI | Academic Machine Learning Project
+            <br>
+            Experimental predictions based on synthetic transaction data.
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

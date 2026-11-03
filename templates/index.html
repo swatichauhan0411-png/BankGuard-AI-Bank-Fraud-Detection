@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard | BankGuard AI{% endblock %}
+
+{% block content %}
+
+<div class="topbar" id="overview">
+    <div>
+        <h1>Dashboard Overview</h1>
+        <p>Welcome to your intelligent bank fraud detection system.</p>
+    </div>
+
+    <div class="status">● System Ready</div>
+</div>
+
+<h2 class="section-title">Project Overview</h2>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="icon">📊</div>
+        <p>Machine Learning Model</p>
+        <h2>Random Forest</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="icon">🛡️</div>
+        <p>Detection Type</p>
+        <h2>Fraud Analysis</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="icon">⚡</div>
+        <p>Application Status</p>
+        <h2>Active</h2>
+    </div>
+
+</div>
+
+<div class="content-card" id="analysis">
+
+    <h2>🔍 Transaction Analysis</h2>
+
+    <p class="card-description">
+        Enter transaction details below to analyse them using the
+        trained Random Forest machine learning model.
+    </p>
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label>Transaction Step</label>
+                <input type="number" name="step"
+                       placeholder="Enter transaction step"
+                       min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label>Transaction Type</label>
+                <select name="type" required>
+                    <option value="">Select transaction type</option>
+                    <option value="PAYMENT">PAYMENT</option>
+                    <option value="TRANSFER">TRANSFER</option>
+                    <option value="CASH_OUT">CASH_OUT</option>
+                    <option value="DEBIT">DEBIT</option>
+                    <option value="CASH_IN">CASH_IN</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Transaction Amount</label>
+                <input type="number" step="any" name="amount"
+                       placeholder="Enter transaction amount"
+                       min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label>Old Balance Origin</label>
+                <input type="number" step="any" name="oldbalanceOrg"
+                       placeholder="Enter old origin balance"
+                       min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label>New Balance Origin</label>
+                <input type="number" step="any" name="newbalanceOrig"
+                       placeholder="Enter new origin balance"
+                       min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label>Old Balance Destination</label>
+                <input type="number" step="any" name="oldbalanceDest"
+                       placeholder="Enter old destination balance"
+                       min="0" required>
+            </div>
+
+            <div class="form-group full-width">
+                <label>New Balance Destination</label>
+                <input type="number" step="any" name="newbalanceDest"
+                       placeholder="Enter new destination balance"
+                       min="0" required>
+            </div>
+
+            <div class="form-group full-width">
+                <button type="submit" class="primary-button">
+                    🔍 Analyse Transaction
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+    
+{% if prediction %}
+
+    <div class="result-card
+        {% if prediction == 'Potential Fraud Transaction' %}
+            fraud-result
+        {% elif prediction == 'Likely Normal Transaction' %}
+            normal-result
+        {% else %}
+            error-result
+        {% endif %}">
+
+        <div class="result-top">
+            <span class="result-label">
+                {% if prediction == 'Potential Fraud Transaction' %}
+                    ⚠ FRAUD ALERT
+                {% elif prediction == 'Likely Normal Transaction' %}
+                    ✓ TRANSACTION VERIFIED AS LIKELY NORMAL
+                {% else %}
+                    ⚠ INPUT ERROR
+                {% endif %}
+            </span>
+
+            <span class="transaction-id">
+                {{ transaction_id }}
+            </span>
+        </div>
+
+        <div class="result-icon">
+            {% if prediction == 'Potential Fraud Transaction' %}
+                ⚠
+            {% elif prediction == 'Likely Normal Transaction' %}
+                ✓
+            {% else %}
+                !
+            {% endif %}
+        </div>
+
+        <h2 class="result-heading">
+            {% if prediction == 'Potential Fraud Transaction' %}
+                POTENTIAL FRAUD
+            {% elif prediction == 'Likely Normal Transaction' %}
+                NORMAL TRANSACTION
+            {% else %}
+                INVALID INPUT
+            {% endif %}
+        </h2>
+
+        <p class="result-message">{{ message }}</p>
+
+        <div class="result-note">
+            {% if prediction == 'Potential Fraud Transaction' %}
+                This transaction has been flagged for further review.
+            {% elif prediction == 'Likely Normal Transaction' %}
+                No fraud was detected by the model for this transaction.
+            {% else %}
+                Please check your transaction details and try again.
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

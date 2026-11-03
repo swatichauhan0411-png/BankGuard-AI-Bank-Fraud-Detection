@@ -1,0 +1,9 @@
+DATA.csv
+data_sample.csv
+data_sampled.csv
+*.csv
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
